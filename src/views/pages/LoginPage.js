@@ -40,7 +40,8 @@ class LoginPage extends Component {
         this.setState({ loading: true, message: {} });
         this.props.login(this.state.data)
             .then((res) => {
-                if (res.data.token) {
+                console.log("Res", res)
+                if (res.data.data.token) {
                     console.log("Login successful!");
                     localStorage.setItem("token", res.data.token);
                     // redirect to homepage

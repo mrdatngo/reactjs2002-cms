@@ -6,8 +6,8 @@ const loggedIn = (data) => ({
     data
 })
 
-const login = () => (dispatch) => {
-    onLogin().then( (data) => {
+const login = (data) => (dispatch) => {
+    return onLogin(data).then( (data) => {
         console.log("data", data)
         return dispatch(loggedIn(data))
     })
