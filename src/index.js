@@ -6,6 +6,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from './store/store'
+import { LOGIN } from "./constants/ActionType";
+
+let token = localStorage.getItem("token")
+if (token) {
+    store.dispatch({ type: LOGIN })
+}
 
 ReactDOM.render(
     <React.StrictMode>

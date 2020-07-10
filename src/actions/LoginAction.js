@@ -7,9 +7,9 @@ const loggedIn = (data) => ({
 })
 
 const login = (data) => (dispatch) => {
-    return onLogin(data).then( (data) => {
-        console.log("data", data)
-        return dispatch(loggedIn(data))
+    return onLogin(data).then( (res) => {
+        localStorage.setItem("token", res.data.token);
+        return dispatch(loggedIn(res.data))
     })
 }
 
