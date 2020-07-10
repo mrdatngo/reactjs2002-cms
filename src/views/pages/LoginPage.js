@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Form, Input, Button, Checkbox, Card, Spin, Alert } from "antd";
-import { login } from "../../api/index";
+// import { login } from "../../api/index";
+import { connect } from 'react-redux'
+import { login } from '../../actions/LoginAction'
 
 const layout = {
     labelCol: {
@@ -36,7 +38,7 @@ class LoginPage extends Component {
 
     btnLogin = (event) => {
         this.setState({ loading: true, message: {} });
-        login(this.state.data)
+        this.props.login(this.state.data)
             .then((res) => {
                 if (res.data.token) {
                     console.log("Login successful!");
@@ -144,4 +146,16 @@ class LoginPage extends Component {
     }
 }
 
-export default LoginPage;
+// function mapStateToProps (state) {
+//     return {
+//         counter: state.counter
+//     }
+// }
+
+function mapDispatchToProps () {
+    return {
+        login
+    }
+}
+
+export default connect(null , mapDispatchToProps())(LoginPage)
