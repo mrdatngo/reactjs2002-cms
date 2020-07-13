@@ -4,6 +4,9 @@ const initialStateLogin = {
     login: {
         isLoggedIn: false,
     },
+    users: {
+        // combineReducer
+    }
 };
 
 const loginReducer = (state = initialStateLogin, action) => {

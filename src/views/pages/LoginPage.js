@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Form, Input, Button, Checkbox, Card, Spin, Alert } from "antd";
 // import { login } from "../../api/index";
-import { connect } from 'react-redux'
-import { login } from '../../actions/LoginAction'
+import { connect } from "react-redux";
+import { login } from "../../actions/LoginAction";
+import { Redirect } from "react-router-dom";
 
 const layout = {
     labelCol: {
@@ -38,7 +39,8 @@ class LoginPage extends Component {
 
     btnLogin = (event) => {
         this.setState({ loading: true, message: {} });
-        this.props.login(this.state.data)
+        this.props
+            .login(this.state.data)
             .then((res) => {
                 if (res.data.token) {
                     console.log("Login successful!");
@@ -68,93 +70,97 @@ class LoginPage extends Component {
     };
     render() {
         const { data, message, loading } = this.state;
+        const { isLoggedIn } = this.props;
         console.log(data);
         return (
-            <Card title="Login Page" style={{ textAlign: "center" }}>
-                {message.err && (
-                    <Alert
-                        message={message.err}
-                        type="error"
-                        style={{ width: "300px", margin: "10px auto" }}
-                    />
-                )}
-                <Form
-                    {...layout}
-                    name="basic"
-                    initialValues={{
-                        remember: true,
-                        username: data.username,
-                        password: data.password,
-                    }}
-                >
-                    <Form.Item
-                        label="Username"
-                        name="username"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input your username!",
-                            },
-                        ]}
+            <>
+                {isLoggedIn && <Redirect to="/" />}
+                <Card title="Login Page" style={{ textAlign: "center" }}>
+                    {message.err && (
+                        <Alert
+                            message={message.err}
+                            type="error"
+                            style={{ width: "300px", margin: "10px auto" }}
+                        />
+                    )}
+                    <Form
+                        {...layout}
+                        name="basic"
+                        initialValues={{
+                            remember: true,
+                            username: data.username,
+                            password: data.password,
+                        }}
                     >
-                        <Input
+                        <Form.Item
+                            label="Username"
                             name="username"
-                            value={data.username}
-                            onChange={this.onDataChange}
-                        />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: "Please input your password!",
-                            },
-                        ]}
-                    >
-                        <Input.Password
-                            name="password"
-                            value={data.password}
-                            onChange={this.onDataChange}
-                        />
-                    </Form.Item>
-
-                    <Form.Item
-                        {...tailLayout}
-                        name="remember"
-                        valuePropName="checked"
-                    >
-                        <Checkbox>Remember me</Checkbox>
-                    </Form.Item>
-
-                    <Form.Item {...tailLayout}>
-                        <Button
-                            type="primary"
-                            htmlType="submit"
-                            onClick={this.btnLogin}
-                            disabled={loading}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please input your username!",
+                                },
+                            ]}
                         >
-                            {loading ? <Spin /> : "Submit"}
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Card>
+                            <Input
+                                name="username"
+                                value={data.username}
+                                onChange={this.onDataChange}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Please input your password!",
+                                },
+                            ]}
+                        >
+                            <Input.Password
+                                name="password"
+                                value={data.password}
+                                onChange={this.onDataChange}
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            {...tailLayout}
+                            name="remember"
+                            valuePropName="checked"
+                        >
+                            <Checkbox>Remember me</Checkbox>
+                        </Form.Item>
+
+                        <Form.Item {...tailLayout}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                onClick={this.btnLogin}
+                                disabled={loading}
+                            >
+                                {loading ? <Spin /> : "Submit"}
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Card>
+            </>
         );
     }
 }
 
-// function mapStateToProps (state) {
-//     return {
-//         counter: state.counter
-//     }
-// }
-
-function mapDispatchToProps () {
+function mapStateToProps(state) {
     return {
-        login
-    }
+        isLoggedIn: state.login.isLoggedIn,
+    };
 }
 
-export default connect(null , mapDispatchToProps())(LoginPage)
+function mapDispatchToProps() {
+    return {
+        login,
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps())(LoginPage);

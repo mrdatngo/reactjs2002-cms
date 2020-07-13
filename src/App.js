@@ -7,15 +7,16 @@ import {
     Redirect,
 } from "react-router-dom";
 
-import LoginPage from './views/pages/LoginPage'
-import HomePage from './views/pages/HomePage'
-
+import LoginPage from "./views/pages/LoginPage";
+import HomePage from "./views/pages/HomePage";
+import DefaultLayout from "./views/layouts/DefaultLayout";
+import PrivateRoute from './views/routers/PrivateRoute'
 
 function App() {
     return (
         <Router>
             {/* header */}
-            <div>
+            {/* <div>
                 <nav>
                     <ul>
                         <li>
@@ -26,11 +27,15 @@ function App() {
                         </li>
                     </ul>
                 </nav>
-            </div>
+            </div> */}
             {/* body */}
             <Switch>
-                <Route path="/login"><LoginPage /></Route>
-                <Route path="/"> <HomePage /> </Route>
+                <Route path="/login">
+                    <LoginPage />
+                </Route>
+                <PrivateRoute path="/">
+                    <DefaultLayout />
+                </PrivateRoute>
             </Switch>
         </Router>
     );
