@@ -68,6 +68,7 @@ class LoginPage extends Component {
             },
         });
     };
+    
     render() {
         const { data, message, loading } = this.state;
         const { isLoggedIn } = this.props;

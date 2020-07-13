@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import { Form, Input, Select, Tooltip, Button } from "antd";
+import { Form, Input, Select, Spin, Button, message } from "antd";
+import { addUser } from '../../../actions/UsersAction';
+import { connect } from 'react-redux'
 
 const { Option } = Select;
 
@@ -16,6 +18,7 @@ class AddUser extends Component {
                 birthYear: "",
                 birthMonth: "",
             },
+            loading: false
         };
     }
 
@@ -49,6 +52,11 @@ class AddUser extends Component {
 
     onFinish = (values) => {
         console.log("Received values of form: ", values);
+        this.setState({ loading: true})
+        this.props.addUser(values).then(data => {
+            this.setState({ loading: false })
+            message.info('Add user successful!');
+        })
     };
 
     render() {
@@ -155,7 +163,7 @@ class AddUser extends Component {
                 </Form.Item>
                 <Form.Item label=" " colon={false}>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        { this.state.loading ? <Spin></Spin> : "Submit" }
                     </Button>
                 </Form.Item>
             </Form>
@@ -163,4 +171,10 @@ class AddUser extends Component {
     }
 }
 
-export default AddUser;
+// function mapDispatchToProps() {
+//     return {
+//         addUser
+//     }
+// }
+
+export default connect(null, { addUser })(AddUser);
