@@ -12,6 +12,8 @@ import {
     Switch,
     Redirect,
 } from "react-router-dom";
+import ViewUsers from "../components/users/ViewUsers";
+import AddUser from "../components/users/AddUser";
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -93,10 +95,10 @@ class DefaultLayout extends Component {
                             >
                                 <Switch>
                                     <Route path="/view-users">
-                                        <p>View users</p>
+                                        <ViewUsers />
                                     </Route>
                                     <Route path="/add-user">
-                                        <p>Add users</p>
+                                        <AddUser />
                                     </Route>
                                 </Switch>
                             </Content>
