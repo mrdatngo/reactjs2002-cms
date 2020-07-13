@@ -20,23 +20,31 @@ class AddUser extends Component {
     }
 
     onDataChange = (event) => {
-        console.log(event.target.name);
-        console.log(event.target.value);
         this.setState({
-            data: {
-                ...this.state.data,
-                [event.target.name]: event.target.value,
-            },
+            ...this.state.data,
+            [event.target.name]: event.target.value,
         });
     };
 
     onAddressChange = (key, value) => {
         console.log(key, value);
+        this.setState({
+            address: {
+                ...this.state.address,
+                key: value,
+            },
+        });
     };
 
     onBirthdayChange = (event) => {
         console.log(event.target.name);
         console.log(event.target.value);
+        this.setState({
+            birthday: {
+                ...this.state.birthday,
+                [event.target.name]: event.target.value,
+            }
+        })
     };
 
     onFinish = (values) => {
@@ -104,7 +112,12 @@ class AddUser extends Component {
                                 name="street"
                                 style={{ width: "50%" }}
                                 placeholder="Input street"
-                                onChange={(event) => { this.onAddressChange(event.target.name, event.target.value) }}
+                                onChange={(event) => {
+                                    this.onAddressChange(
+                                        event.target.name,
+                                        event.target.value
+                                    );
+                                }}
                             />
                         </Form.Item>
                     </Input.Group>
