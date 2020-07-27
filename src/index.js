@@ -13,6 +13,8 @@ if (token) {
     store.dispatch({ type: LOGIN })
 }
 
+console.log("STARTING PROJECT")
+
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
